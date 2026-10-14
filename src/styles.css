@@ -1067,9 +1067,6 @@ dialog[open] {
 .zoom-surface {
   min-width: 100%;
   min-height: 100%;
-  transition:
-    width 0.35s ease,
-    height 0.35s ease;
 }
 .zoom-surface img {
   width: 100%;

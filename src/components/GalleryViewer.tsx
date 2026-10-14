@@ -73,8 +73,19 @@ export function GalleryViewer({ look }: { look: Look }) {
   function changeZoom(next: number) {
     setZoom(next);
     stage.current?.focus({ preventScroll: true });
-    if (next === 1)
+    if (next === 1) {
       stage.current?.scrollTo({ left: 0, top: 0, behavior: "auto" });
+      return;
+    }
+    requestAnimationFrame(() => {
+      const element = stage.current;
+      if (!element) return;
+      element.scrollTo({
+        left: (element.scrollWidth - element.clientWidth) / 2,
+        top: (element.scrollHeight - element.clientHeight) / 2,
+        behavior: "auto",
+      });
+    });
   }
   return (
     <div className="gallery-viewer">
