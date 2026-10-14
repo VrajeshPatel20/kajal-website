@@ -21,7 +21,7 @@ export interface CartLine {
   variantId: string;
   quantity: number;
 }
-/** Editorial looks intentionally do not imply purchasable inventory. */
+/** Editorial look content; catalog pricing is keyed separately by look ID. */
 export interface Look {
   silhouette: "Gowns" | "Separates";
   id: string;

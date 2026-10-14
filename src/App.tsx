@@ -10,6 +10,7 @@ import { looks } from "./data/looks";
 import { formatPrice, getCatalogItem } from "./data/catalog";
 import { useCart } from "./commerce/CommerceProvider";
 import { CartDrawer } from "./components/CartDrawer";
+import { UpcomingApparelSection } from "./components/UpcomingApparelSection";
 
 import { Modal } from "./components/Modal";
 
@@ -117,6 +118,7 @@ export default function App() {
           onOpen={setSelected}
           onAdd={(id) => dispatch({ type: "add", variantId: id, quantity: 1 })}
         />
+        <UpcomingApparelSection />
         <HouseSection />
         <DesignerSection />
         <ClosingSection />

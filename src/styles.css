@@ -139,16 +139,6 @@ img {
 .text-link:hover:after {
   transform: scaleX(1);
 }
-.launch-link {
-  font-size: 11px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.launch-link span {
-  margin-left: 15px;
-  font-size: 19px;
-}
 i {
   display: inline-block;
   width: 6px;
@@ -575,37 +565,6 @@ dialog::backdrop {
   font-size: 20px;
   margin-left: 18px;
 }
-.launch-content {
-  padding: 75px 12%;
-  max-width: 720px;
-  margin: auto;
-}
-.launch-content h2 {
-  font-size: clamp(64px, 8vw, 104px);
-  line-height: 1;
-  margin: 35px 0;
-}
-.launch-content h2 em {
-  color: var(--accent);
-}
-.launch-content p {
-  font-size: 14px;
-  line-height: 1.9;
-}
-.launch-content .launch-note {
-  font-size: 12px;
-  color: #45595b;
-  margin: 24px 0;
-}
-.solid-link {
-  display: flex;
-  justify-content: space-between;
-  background: var(--accent);
-  color: white;
-  padding: 18px 22px;
-  font-size: 12px;
-  margin-top: 30px;
-}
 .look-detail {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -703,8 +662,7 @@ dialog::backdrop {
   .wordmark {
     font-size: 29px;
   }
-  .header nav,
-  .launch-link {
+  .header nav {
     display: none;
   }
   .menu-toggle {
@@ -895,12 +853,6 @@ dialog::backdrop {
   }
   .detail-nav {
     padding-top: 25px;
-  }
-  .launch-content {
-    padding: 80px 8% 40px;
-  }
-  .launch-content h2 {
-    font-size: 65px;
   }
   .photo-cta {
     opacity: 1;

@@ -28,9 +28,10 @@ To deploy from a local terminal instead, install and authenticate the Vercel CLI
 - `src/art-direction.css` — current ivory/stone collection-library design and responsive grid.
 - `src/components/CollectionHero.tsx` — Oceans Eleven introduction and paired runway images.
 - `src/components/CollectionSection.tsx` — responsive library and silhouette filters.
+- `src/components/UpcomingApparelSection.tsx` — future apparel categories with accessible filters.
 - `src/components/HouseSection.tsx` — brand statement.
 - `src/components/DesignerSection.tsx` — designer introduction.
-- `src/components/ClosingSection.tsx` — closing launch invitation.
+- `src/components/ClosingSection.tsx` — closing collection call to action.
 - `src/components/LookCard.tsx` — reusable editorial card and responsive image.
 - `src/components/CartDrawer.tsx` — shopping bag, item quantities, subtotal and checkout readiness.
 - `src/components/Modal.tsx` — native dialog, focus restoration and body scroll lock.
@@ -55,7 +56,7 @@ The Oceans Eleven catalog lists five looks at $120 USD each in `src/data/catalog
 
 ## Experience and content
 
-The single-page routes are `#collection`, `#house`, `#designer` and `#contact`; navigation preserves browser history and deep links. A gallery dialog supports next/previous controls and arrow keys. Native modal dialogs support Escape and focus containment. The mobile menu, reduced-motion mode, visible focus rings, skip link and descriptive image alternatives are implemented. The designer section interprets the brief's “ABC Hello” as a personal “Hello, I’m Kesha Patel” introduction.
+The single-page routes are `#collection`, `#house`, `#designer` and `#contact`; navigation preserves browser history and deep links. A gallery dialog supports next/previous controls and arrow keys. Native modal dialogs support Escape and focus containment. The mobile menu, reduced-motion mode, visible focus rings, skip link and descriptive image alternatives are implemented. Future apparel categories have dedicated accessible filters and are clearly marked “Coming soon” until the pieces are available. The designer section interprets the brief's “ABC Hello” as a personal “Hello, I’m Kesha Patel” introduction.
 
 Launch copy is editorial draft copy. Biographical details and ocean inspiration follow the supplied brief. The official contact is keshapatel@gmail.com, displayed as a mailto link in the contact section and footer. No studio address, social account or commerce availability was invented. Original photography remains in `images`; confirm publication rights before a public deployment. No public deployment was performed.
 

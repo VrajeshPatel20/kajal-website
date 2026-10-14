@@ -13,7 +13,7 @@ export function CollectionHero({
         <span>COLLECTION 001 / BY KESHA PATEL</span>
       </div>
       <h1 id="hero-title">
-        OCEANS <span>ELEVEN</span>
+        BENEATH <span>THE SEA</span>
         <sup>01</sup>
       </h1>
       <div className="runway-triptych">
