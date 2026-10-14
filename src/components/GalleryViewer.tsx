@@ -82,7 +82,7 @@ export function GalleryViewer({ look }: { look: Look }) {
       if (!element) return;
       element.scrollTo({
         left: (element.scrollWidth - element.clientWidth) / 2,
-        top: (element.scrollHeight - element.clientHeight) / 2,
+        top: 0,
         behavior: "auto",
       });
     });
