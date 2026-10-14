@@ -4,8 +4,10 @@ import { LookCard } from "./LookCard";
 /** Filters operate on editorial metadata and remain independent of a commerce provider. */
 export function CollectionSection({
   onOpen,
+  onAdd,
 }: {
   onOpen: (index: number) => void;
+  onAdd: (id: string) => void;
 }) {
   const [filter, setFilter] = useState("All looks");
   const visible = looks.filter(
@@ -54,6 +56,7 @@ export function CollectionSection({
             key={look.id}
             look={look}
             total={looks.length}
+            onAdd={onAdd}
             onOpen={() =>
               onOpen(looks.findIndex((item) => item.id === look.id))
             }

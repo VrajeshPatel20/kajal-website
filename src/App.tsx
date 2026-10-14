@@ -7,13 +7,19 @@ import { DesignerSection } from "./components/DesignerSection";
 import { HouseSection } from "./components/HouseSection";
 import { useEffect, useState } from "react";
 import { looks } from "./data/looks";
+import { formatPrice, getCatalogItem } from "./data/catalog";
+import { useCart } from "./commerce/CommerceProvider";
+import { CartDrawer } from "./components/CartDrawer";
 
 import { Modal } from "./components/Modal";
 
 export default function App() {
-  const [launch, setLaunch] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [menu, setMenu] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [addedLookId, setAddedLookId] = useState<string | null>(null);
+  const { lines, dispatch } = useCart();
+  const cartQuantity = lines.reduce((total, line) => total + line.quantity, 0);
   // IntersectionObserver reveals avoid a scroll-event render loop; reduced motion stays static.
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,8 +61,19 @@ export default function App() {
           <a href="#designer">The designer</a>
           <a href="#contact">Contact</a>
         </nav>
-        <button className="launch-link" onClick={() => setLaunch(true)}>
-          <i /> Open for business <span>↗</span>
+        <button
+          className="cart-trigger"
+          aria-label={`Open shopping bag, ${cartQuantity} items`}
+          onClick={() => setCartOpen(true)}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 8h14l-1 13H6L5 8Z" />
+            <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+          </svg>
+          <span>Bag</span>
+          <span className="cart-count" aria-live="polite">
+            {cartQuantity}
+          </span>
         </button>
         <button
           className="menu-toggle"
@@ -83,31 +100,26 @@ export default function App() {
               {title} ↗
             </a>
           ))}
-          <button
-            onClick={() => {
-              setMenu(false);
-              setLaunch(true);
-            }}
-          >
-            Open for business ↗
-          </button>
         </nav>
       )}
       <main id="main">
         <CollectionHero onOpen={setSelected} />
-        <button className="announcement" onClick={() => setLaunch(true)}>
+        <a className="announcement" href="#collection">
           <span className="mono">
-            <i /> THE HOUSE IS OPEN
+            THE DEBUT COLLECTION
           </span>
           <span>Introducing Oceans Eleven.</span>
           <span className="mono">
-            MEET KAJAL <b>↗</b>
+            SHOP THE LOOKS <b>↗</b>
           </span>
-        </button>
-        <CollectionSection onOpen={setSelected} />
+        </a>
+        <CollectionSection
+          onOpen={setSelected}
+          onAdd={(id) => dispatch({ type: "add", variantId: id, quantity: 1 })}
+        />
         <HouseSection />
         <DesignerSection />
-        <ClosingSection onOpen={() => setLaunch(true)} />
+        <ClosingSection />
       </main>
       <footer>
         <div className="footer-top">
@@ -129,39 +141,6 @@ export default function App() {
           <a href="#">BACK TO TOP ↑</a>
         </div>
       </footer>
-      {launch && (
-        <Modal
-          label="Kajal launch announcement"
-          onClose={() => setLaunch(false)}
-        >
-          <div className="launch-content">
-            <span className="mono">
-              <i /> NEW YORK — NOW OPEN
-            </span>
-            <h2>
-              The house
-              <br />
-              is <em>open.</em>
-            </h2>
-            <p>
-              Introducing Kajal, a New York fashion house by Kesha Patel. Our
-              debut collection, Oceans Eleven, is here. Explore the runway and
-              discover a new point of view.
-            </p>
-            <p className="launch-note">
-              The debut edit is presented as a lookbook. Online shopping is
-              coming in a future chapter.
-            </p>
-            <a
-              className="solid-link"
-              href="#collection"
-              onClick={() => setLaunch(false)}
-            >
-              Explore Oceans Eleven <span>↗</span>
-            </a>
-          </div>
-        </Modal>
-      )}
       {selected !== null && (
         <Modal
           label={`Look ${looks[selected].id}: ${looks[selected].title}`}
@@ -172,8 +151,39 @@ export default function App() {
             <div className="look-detail-copy">
               <span className="mono">OCEANS ELEVEN / {looks[selected].id}</span>
               <h2>{looks[selected].title}</h2>
+              <span className="look-detail-price">
+                {formatPrice(getCatalogItem(looks[selected].id).amount)} USD
+              </span>
               <p>{looks[selected].description}</p>
               <span className="mono">{looks[selected].category}</span>
+              <button
+                className="look-add-to-cart"
+                onClick={() => {
+                  dispatch({
+                    type: "add",
+                    variantId: looks[selected].id,
+                    quantity: 1,
+                  });
+                  setAddedLookId(looks[selected].id);
+                }}
+              >
+                {addedLookId === looks[selected].id
+                  ? "Added to bag"
+                  : "Add to bag"}
+                <span>{addedLookId === looks[selected].id ? "✓" : "+"}</span>
+              </button>
+              {addedLookId === looks[selected].id && (
+                <button
+                  className="view-bag-link"
+                  onClick={() => {
+                    setSelected(null);
+                    setCartOpen(true);
+                    setAddedLookId(null);
+                  }}
+                >
+                  View your bag ↗
+                </button>
+              )}
               <div className="detail-nav">
                 <button
                   onClick={() =>
@@ -195,6 +205,7 @@ export default function App() {
           </div>
         </Modal>
       )}
+      {cartOpen && <CartDrawer onClose={() => setCartOpen(false)} />}
     </>
   );
 }

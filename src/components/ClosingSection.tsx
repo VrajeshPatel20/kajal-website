@@ -1,5 +1,5 @@
 import { OceanAtmosphere } from "./OceanAtmosphere";
-export function ClosingSection({ onOpen }: { onOpen: () => void }) {
+export function ClosingSection() {
   return (
     <section
       className="closing section reveal"
@@ -22,9 +22,9 @@ export function ClosingSection({ onOpen }: { onOpen: () => void }) {
       <a className="contact-email" href="mailto:keshapatel@gmail.com">
         keshapatel@gmail.com <span>↗</span>
       </a>
-      <button className="closing-cta" onClick={() => onOpen()}>
-        Step inside the house <span>↗</span>
-      </button>
+      <a className="closing-cta" href="#collection">
+        Shop the collection <span>↗</span>
+      </a>
     </section>
   );
 }

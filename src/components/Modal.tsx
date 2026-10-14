@@ -26,7 +26,13 @@ export function Modal({
     <dialog
       ref={ref}
       aria-label={label}
-      className={label.startsWith("Look ") ? "look-modal" : undefined}
+      className={
+        label.startsWith("Look ")
+          ? "look-modal"
+          : label.startsWith("Your shopping bag")
+            ? "cart-modal"
+            : undefined
+      }
       onCancel={onClose}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();

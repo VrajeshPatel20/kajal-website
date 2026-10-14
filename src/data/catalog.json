@@ -1,0 +1,10 @@
+{
+  "currency": "USD",
+  "items": [
+    { "id": "01", "title": "The midnight jellyfish", "amount": 12000 },
+    { "id": "02", "title": "The silver ray", "amount": 12000 },
+    { "id": "03", "title": "The reef in blue", "amount": 12000 },
+    { "id": "04", "title": "The ribbon eel", "amount": 12000 },
+    { "id": "05", "title": "The sea anemone", "amount": 12000 }
+  ]
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { lookAsset, lookPreview } from "../data/assets";
 import type { Look } from "../commerce/types";
+import { formatPrice, getCatalogItem } from "../data/catalog";
 export function LookImage({
   look,
   priority = false,
@@ -36,29 +37,39 @@ export function LookCard({
   look,
   total,
   onOpen,
+  onAdd,
 }: {
   look: Look;
   total: number;
   onOpen: (look: Look) => void;
+  onAdd: (id: string) => void;
 }) {
   return (
-    <button
-      className="look-card"
-      onClick={() => onOpen(look)}
-      aria-label={`Explore look ${look.id}: ${look.title}`}
-    >
-      <div className="look-photo">
-        <LookImage look={look} />
-        <span className="photo-cta">Explore look ↗</span>
-      </div>
+    <article className="look-card">
+      <button
+        className="look-card-open"
+        onClick={() => onOpen(look)}
+        aria-label={`Explore look ${look.id}: ${look.title}`}
+      >
+        <div className="look-photo">
+          <LookImage look={look} />
+          <span className="photo-cta">View details ↗</span>
+        </div>
+      </button>
       <div className="look-caption">
         <span>{look.title}</span>
+        <span className="look-price">{formatPrice(getCatalogItem(look.id).amount)} USD</span>
+      </div>
+      <div className="look-card-meta">
+        <span className="look-category mono">{look.category}</span>
         <span className="mono">
-          {look.id} / {String(total).padStart(2, "0")}
+          LOOK {look.id} / {String(total).padStart(2, "0")}
         </span>
       </div>
-      <span className="look-category mono">{look.category}</span>
       <p className="look-story">{look.description}</p>
-    </button>
+      <button className="card-add-to-cart" onClick={() => onAdd(look.id)}>
+        Add to bag <span>+</span>
+      </button>
+    </article>
   );
 }

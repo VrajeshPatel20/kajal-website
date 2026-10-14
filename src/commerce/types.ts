@@ -1,4 +1,4 @@
-/** Provider-neutral commerce contracts. Monetary amounts use integer minor units. */
+/** Commerce contracts. Monetary amounts use integer minor units. */
 export interface Money {
   amount: number;
   currency: string;
@@ -20,10 +20,6 @@ export interface ProductVariant {
 export interface CartLine {
   variantId: string;
   quantity: number;
-}
-export interface CommerceAdapter {
-  getProducts(): Promise<Product[]>;
-  createCheckout(lines: CartLine[]): Promise<{ url: string }>;
 }
 /** Editorial looks intentionally do not imply purchasable inventory. */
 export interface Look {

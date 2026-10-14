@@ -36,3 +36,23 @@ test("removes a variant and clears the cart", () => {
   ]);
   assert.deepEqual(cartReducer(initial, { type: "clear" }), []);
 });
+
+test("sets a cart quantity or removes the item at zero", () => {
+  const initial = [{ variantId: "a", quantity: 3 }];
+  assert.deepEqual(
+    cartReducer(initial, {
+      type: "set-quantity",
+      variantId: "a",
+      quantity: 2,
+    }),
+    [{ variantId: "a", quantity: 2 }],
+  );
+  assert.deepEqual(
+    cartReducer(initial, {
+      type: "set-quantity",
+      variantId: "a",
+      quantity: 0,
+    }),
+    [],
+  );
+});

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import type { Look } from "../commerce/types";
-import { lookAsset, lookPreview } from "../data/assets";
+import { lookAsset, lookOriginal, lookPreview } from "../data/assets";
 
 /** Mounted only for an open look: high-resolution bytes never enter the initial page load. */
 export function GalleryViewer({ look }: { look: Look }) {
-  const [source, setSource] = useState(lookPreview(look.image));
+  const [source, setSource] = useState(() => lookAsset(look.image, 1440));
   const [quality, setQuality] = useState<"loading" | "ready" | "preview">(
     "loading",
   );
@@ -24,8 +24,15 @@ export function GalleryViewer({ look }: { look: Look }) {
     // Load one candidate at a time, preserving the bundled preview throughout.
     async function load() {
       setQuality("loading");
-      for (const width of [1920, 960, 480] as const) {
-        const base = lookAsset(look.image, width);
+      const candidates = [
+        { url: lookOriginal(look.image), quality: "ready" as const },
+        { url: lookAsset(look.image, 1920), quality: "ready" as const },
+        { url: lookAsset(look.image, 1440), quality: "preview" as const },
+        { url: lookAsset(look.image, 960), quality: "preview" as const },
+        { url: lookAsset(look.image, 480), quality: "preview" as const },
+      ];
+      for (const candidate of candidates) {
+        const base = candidate.url;
         const url = attempt ? `${base}?retry=${attempt}` : base;
         const ok = await new Promise<boolean>((resolve) => {
           const image = new Image();
@@ -44,11 +51,14 @@ export function GalleryViewer({ look }: { look: Look }) {
         if (!active) return;
         if (ok) {
           setSource(url);
-          setQuality(width === 1920 ? "ready" : "preview");
+          setQuality(candidate.quality);
           return;
         }
       }
-      if (active) setQuality("preview");
+      if (active) {
+        setSource(lookPreview(look.image));
+        setQuality("preview");
+      }
     }
     void load();
     return () => {
@@ -129,7 +139,7 @@ export function GalleryViewer({ look }: { look: Look }) {
             draggable={false}
             decoding="async"
             onError={() => {
-              setSource(lookPreview(look.image));
+              setSource(lookAsset(look.image, 1440));
               setQuality("preview");
             }}
           />

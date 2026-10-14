@@ -13,6 +13,12 @@ cd /Users/vrajeshpatel/Desktop/projects/kajal-website
 
 Open the URL printed in the terminal. For a fresh environment, install Node.js 22+ and pnpm, then run `pnpm install`, `pnpm dev`. Production: `pnpm build`; inspect: `pnpm preview`; tests: `pnpm test`. The lockfile records exact dependency versions. The package installer reported an unapproved optional esbuild install script; the platform binary successfully built the project without running that script.
 
+## Deploy to Vercel
+
+Import the GitHub repository in Vercel and set the project root directory to `.` (the repository root). `vercel.json` pins installation to `pnpm install --frozen-lockfile`, the Vite build command, and `dist` output. `package.json` pins pnpm and explicitly includes Rollup's Linux x64 GNU optional binary to prevent the missing-native-module error. No environment variables are required for the current catalog and cart. After connecting the repository, deploy the intended branch (usually `main`); to deploy these latest changes, push this branch and merge its pull request first.
+
+To deploy from a local terminal instead, install and authenticate the Vercel CLI, then run `vercel` from the repository root. For a production deployment, run `vercel --prod`.
+
 ## Source manifest
 
 - `index.html` — document metadata, font preloads and React entry.
@@ -26,8 +32,11 @@ Open the URL printed in the terminal. For a fresh environment, install Node.js 2
 - `src/components/DesignerSection.tsx` — designer introduction.
 - `src/components/ClosingSection.tsx` — closing launch invitation.
 - `src/components/LookCard.tsx` — reusable editorial card and responsive image.
+- `src/components/CartDrawer.tsx` — shopping bag, item quantities, subtotal and checkout readiness.
 - `src/components/Modal.tsx` — native dialog, focus restoration and body scroll lock.
 - `src/data/looks.ts` — typed editorial copy and photography references.
+- `src/data/catalog.json` — collection prices in integer USD cents.
+- `src/data/catalog.ts` — catalog lookups and price formatting.
 - `src/commerce/types.ts` — product, variant, money, look, cart and adapter interfaces.
 - `src/commerce/CommerceProvider.tsx` — injected commerce adapter and `useCart` hook.
 - `src/commerce/cart.ts` — pure cart reducer.
@@ -42,9 +51,7 @@ Open the URL printed in the terminal. For a fresh environment, install Node.js 2
 
 ## Commerce integration
 
-Editorial `Look` data is independent of `Product`, with an optional `productId` association. The launch does not present runway garments as stock or invent prices. `CommerceProvider` accepts a `CommerceAdapter`; implement `getProducts()` and `createCheckout()` with Shopify Storefront or Medusa, then inject the adapter at the root. Existing story sections and gallery rendering remain independent of the chosen provider.
-
-The cart uses provider-neutral variant IDs and integer quantities. Prices use integer minor units with currency. A real integration still needs inventory validation, persistence, provider error handling, product selection UI, server-side secret management where needed, and checkout integration tests. The adapter boundary minimizes refactoring; it is not a complete commerce backend. Never put private API credentials in Vite client environment variables.
+The Oceans Eleven catalog lists five looks at $120 USD each in `src/data/catalog.json`. Collection cards and the look dialog can add items to the bag; the header opens a cart with quantity controls, removal, and subtotal. Checkout is intentionally disabled until live U.S. shipping rates are configured. Stripe was selected as the intended payment provider, but no carrier-rate service has been selected or connected. Before enabling checkout, integrate an address-based U.S. shipping calculator, collect and validate its rate server-side, create Stripe Checkout Sessions with server-side secrets, and test the full order flow. Never put private API credentials in Vite client environment variables.
 
 ## Experience and content
 
