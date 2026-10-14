@@ -9,7 +9,10 @@ export function CartDrawer({ onClose }: { onClose: () => void }) {
   const { lines, dispatch } = useCart();
   const quantity = lines.reduce((total, line) => total + line.quantity, 0);
   const total = lines.reduce(
-    (sum, line) => sum + getCatalogItem(line.variantId).amount * line.quantity,
+    (sum, line) => {
+      const { lookId } = parseProductVariantId(line.variantId);
+      return sum + getCatalogItem(lookId).amount * line.quantity;
+    },
     0,
   );
 
