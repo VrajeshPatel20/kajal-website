@@ -42,7 +42,6 @@ export function Modal({
         className="modal-close"
         onClick={onClose}
         aria-label="Close dialog"
-        title="Close"
       >
         <span aria-hidden="true">×</span>
       </button>

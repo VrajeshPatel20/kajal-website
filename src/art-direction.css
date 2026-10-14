@@ -595,6 +595,12 @@ dialog {
   line-height: 1;
   box-shadow: 0 2px 10px #20291b1c;
 }
+.modal-close span {
+  display: block;
+  margin: 0;
+  font-size: 27px;
+  line-height: 1;
+}
 .modal-close:hover {
   background: #303d26;
   color: #fff;
