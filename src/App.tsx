@@ -46,14 +46,14 @@ export default function App() {
         Skip to content
       </a>
       <header className="header">
-        <a href="#" className="wordmark" aria-label="Kajal home">
+        <a href="#" className="wordmark" aria-label="Kajal home" style={{ fontSize: '15px' }}>
           <BrandLogo />
         </a>
         <nav aria-label="Main navigation">
-          <a href="#collection">The collection</a>
-          <a href="#house">The house</a>
-          <a href="#designer">The designer</a>
-          <a href="#contact">Contact</a>
+          <a href="#collection" style={{ fontSize: '15px' }}>The collection</a>
+          <a href="#house" style={{ fontSize: '15px' }}>The house</a>
+          <a href="#designer" style={{ fontSize: '15px' }}>The designer</a>
+          <a href="#contact" style={{ fontSize: '15px' }}>Contact</a>
         </nav>
         <button className="launch-link" onClick={() => setLaunch(true)}>
           <i /> Open for business <span>↗</span>
@@ -83,7 +83,7 @@ export default function App() {
               {title} ↗
             </a>
           ))}
-          <button
+          <button style={{ fontSize: '20px'}}
             onClick={() => {
               setMenu(false);
               setLaunch(true);
