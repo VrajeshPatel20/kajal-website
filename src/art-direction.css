@@ -9,10 +9,10 @@
 }
 :root {
   font-family: Manrope, Arial, sans-serif;
-  --paper: #f5f4ef;
-  --ink: #232723;
-  --line: #cbcfc5;
-  --accent: #4c5843;
+  --paper: #f7f5ef;
+  --ink: #172b4d;
+  --line: #d5d1c8;
+  --accent: #203d68;
   color: var(--ink);
   background: var(--paper);
 }
@@ -23,8 +23,8 @@ button {
   font-family: inherit;
 }
 ::selection {
-  background: #dce4bf;
-  color: #232723;
+  background: #dce3ee;
+  color: var(--ink);
 }
 h1,
 h2,
@@ -98,7 +98,7 @@ em {
   font-size: 12px;
   letter-spacing: 0;
   margin-top: 15px;
-  border: 1px solid #87917c;
+  border: 1px solid #8797b0;
   border-radius: 50%;
   padding: 10px;
   line-height: 1;
@@ -117,7 +117,7 @@ em {
   position: relative;
   min-width: 0;
   overflow: hidden;
-  background: #e8e8e2;
+  background: #eeece5;
   aspect-ratio: 2/3;
 }
 .runway-plate img {
@@ -132,7 +132,7 @@ em {
   top: 14px;
   left: 14px;
   border: 1px solid #f9f9f099;
-  background: #25272270;
+  background: #172b4d70;
   color: white;
   backdrop-filter: blur(8px);
   border-radius: 50%;
@@ -150,10 +150,10 @@ em {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f7f7f0ed;
+  background: #f7f5efed;
   padding: 12px 14px;
   font-size: 11px;
-  color: #242922;
+  color: #172b4d;
 }
 .plate-label > span {
   font-size: 20px;
@@ -174,11 +174,11 @@ em {
 .runway-bottom > span {
   font-size: 12px;
   line-height: 1.8;
-  color: #5e665a;
+  color: #59677d;
 }
 .runway-bottom > a {
   font-size: 12px;
-  border-bottom: 1px solid #76816d;
+  border-bottom: 1px solid #8797b0;
   padding: 12px 0;
   min-width: 160px;
   display: flex;
@@ -188,11 +188,11 @@ em {
   font-size: 18px;
 }
 .announcement {
-  background: #e5e9d9;
-  color: #343d2b;
+  background: #e8edf4;
+  color: #203d68;
   padding: 12px 3%;
-  border-top: 1px solid #c9d1bd;
-  border-bottom: 1px solid #c9d1bd;
+  border-top: 1px solid #c8d2e0;
+  border-bottom: 1px solid #c8d2e0;
 }
 .announcement > span:nth-child(2) {
   font-family: Manrope, Arial, sans-serif;
@@ -203,10 +203,10 @@ em {
   font-size: 9px;
 }
 .announcement i {
-  background: #647452;
+  background: #49638b;
 }
 .announcement:focus-visible {
-  outline-color: #3d4d32;
+  outline-color: #203d68;
 }
 .collection {
   padding: 65px 3% 40px;
@@ -620,7 +620,7 @@ dialog {
   padding: 0 13px;
   border: 1px solid #8e9a80;
   color: #303d26;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.8px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -1130,14 +1130,14 @@ dialog {
     padding: 0 5%;
   }
   .cart-trigger {
-    min-height: 42px;
-    padding: 0 9px;
-    gap: 6px;
-    font-size: 9px;
+    min-height: 44px;
+    padding: 0 10px;
+    gap: 7px;
+    font-size: 11px;
   }
   .cart-trigger svg {
-    width: 15px;
-    height: 15px;
+    width: 17px;
+    height: 17px;
   }
   .upcoming-apparel {
     padding: 46px 5% 48px;
@@ -1240,7 +1240,7 @@ dialog {
     scroll-snap-type: x mandatory;
     padding-bottom: 14px;
     scrollbar-width: thin;
-    scrollbar-color: #7c8b67 transparent;
+    scrollbar-color: #8797b0 transparent;
   }
   .runway-plate {
     flex: 0 0 91%;
@@ -1515,7 +1515,7 @@ dialog {
 }
 .header nav {
   gap: clamp(18px, 2vw, 32px);
-  font-size: 11px;
+  font-size: 13px;
 }
 @media (max-width: 1000px) and (min-width: 701px) {
   .header .brand-mark {
@@ -1523,7 +1523,7 @@ dialog {
   }
   .header nav {
     gap: 14px;
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 @media (max-width: 700px) {
@@ -1535,11 +1535,11 @@ dialog {
     width: 128px;
   }
   .menu-toggle {
-    min-width: 44px;
-    min-height: 44px;
+    min-width: 46px;
+    min-height: 46px;
     border: 1px solid var(--line);
     border-radius: 999px;
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.04em;
   }
 }
