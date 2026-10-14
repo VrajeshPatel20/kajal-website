@@ -11,7 +11,7 @@ cd /Users/vrajeshpatel/Desktop/projects/kajal-website
 ./run-local.sh
 ```
 
-Open the URL printed in the terminal. For a fresh environment, install Node.js 22+ and pnpm, then run `pnpm install`, `pnpm dev`. Production: `pnpm build`; inspect: `pnpm preview`; tests: `pnpm test`. The lockfile records exact dependency versions. The package installer reported an unapproved optional esbuild install script; the platform binary successfully built the project without running that script.
+Open the URL printed in the terminal. For a fresh environment, install Node.js 22+ and pnpm, then run `pnpm install`, `pnpm dev`. Production: `pnpm build`; inspect: `pnpm preview`; tests: `pnpm test`. The lockfile records exact dependency versions. pnpm is configured to allow esbuild's install script, which Vite uses to verify its platform binary.
 
 ## Deploy to Vercel
 
