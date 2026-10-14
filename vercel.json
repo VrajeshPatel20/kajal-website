@@ -1,6 +1,6 @@
 {
   "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm run build",
+  "buildCommand": "pnpm run build && pwd && ls -ld dist && test -f dist/index.html",
   "outputDirectory": "dist"
 }
