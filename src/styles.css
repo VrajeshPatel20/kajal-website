@@ -1057,6 +1057,7 @@ dialog[open] {
   scrollbar-width: thin;
   position: relative;
   outline-offset: -4px !important;
+  cursor: zoom-in;
 }
 .zoom-stage.is-zoomed {
   cursor: grab;

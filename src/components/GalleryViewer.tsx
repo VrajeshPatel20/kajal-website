@@ -70,7 +70,7 @@ export function GalleryViewer({ look }: { look: Look }) {
       }
     };
   }, [look.image, attempt]);
-  function changeZoom(next: number) {
+  function changeZoom(next: number, focalPoint?: { x: number; y: number }) {
     setZoom(next);
     stage.current?.focus({ preventScroll: true });
     if (next === 1) {
@@ -81,8 +81,12 @@ export function GalleryViewer({ look }: { look: Look }) {
       const element = stage.current;
       if (!element) return;
       element.scrollTo({
-        left: (element.scrollWidth - element.clientWidth) / 2,
-        top: 0,
+        left: focalPoint
+          ? focalPoint.x * next - element.clientWidth / 2
+          : (element.scrollWidth - element.clientWidth) / 2,
+        top: focalPoint
+          ? focalPoint.y * next - element.clientHeight / 2
+          : 0,
         behavior: "auto",
       });
     });
@@ -94,7 +98,15 @@ export function GalleryViewer({ look }: { look: Look }) {
         className={`zoom-stage ${zoom > 1 ? "is-zoomed" : ""}`}
         tabIndex={0}
         role="region"
-        aria-label="Runway image. When zoomed, drag or use arrow keys to pan."
+        aria-label="Runway image. Click to zoom into a point. When zoomed, drag or use arrow keys to pan."
+        onClick={(e) => {
+          if (zoom !== 1) return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          changeZoom(2, {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+          });
+        }}
         onKeyDown={(e) => {
           if (zoom > 1 && e.key.startsWith("Arrow")) {
             e.stopPropagation();
