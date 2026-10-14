@@ -17,6 +17,7 @@ export function GalleryViewer({ look }: { look: Look }) {
     left: number;
     top: number;
   } | null>(null);
+  const suppressClick = useRef(false);
   useEffect(() => {
     let active = true;
     let pending: HTMLImageElement | null = null;
@@ -98,9 +99,16 @@ export function GalleryViewer({ look }: { look: Look }) {
         className={`zoom-stage ${zoom > 1 ? "is-zoomed" : ""}`}
         tabIndex={0}
         role="region"
-        aria-label="Runway image. Click to zoom into a point. When zoomed, drag or use arrow keys to pan."
+        aria-label="Runway image. Click to zoom in or out. When zoomed, drag or use arrow keys to pan."
         onClick={(e) => {
-          if (zoom !== 1) return;
+          if (suppressClick.current) {
+            suppressClick.current = false;
+            return;
+          }
+          if (zoom !== 1) {
+            changeZoom(1);
+            return;
+          }
           const rect = e.currentTarget.getBoundingClientRect();
           changeZoom(2, {
             x: e.clientX - rect.left,
@@ -129,6 +137,7 @@ export function GalleryViewer({ look }: { look: Look }) {
         onPointerDown={(e) => {
           if (zoom === 1 || e.pointerType === "touch") return;
           e.currentTarget.setPointerCapture(e.pointerId);
+          suppressClick.current = false;
           drag.current = {
             x: e.clientX,
             y: e.clientY,
@@ -138,6 +147,11 @@ export function GalleryViewer({ look }: { look: Look }) {
         }}
         onPointerMove={(e) => {
           if (!drag.current) return;
+          if (
+            Math.abs(drag.current.x - e.clientX) > 5 ||
+            Math.abs(drag.current.y - e.clientY) > 5
+          )
+            suppressClick.current = true;
           e.currentTarget.scrollLeft =
             drag.current.left + drag.current.x - e.clientX;
           e.currentTarget.scrollTop =
