@@ -11,6 +11,11 @@ import { formatPrice, getCatalogItem } from "./data/catalog";
 import { useCart } from "./commerce/CommerceProvider";
 import { CartDrawer } from "./components/CartDrawer";
 import { UpcomingApparelSection } from "./components/UpcomingApparelSection";
+import {
+  createProductVariantId,
+  productSizes,
+  type ProductSize,
+} from "./commerce/productVariant";
 
 import { Modal } from "./components/Modal";
 
@@ -19,6 +24,7 @@ export default function App() {
   const [menu, setMenu] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [addedLookId, setAddedLookId] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<ProductSize>("M");
   const { lines, dispatch } = useCart();
   const cartQuantity = lines.reduce((total, line) => total + line.quantity, 0);
   // IntersectionObserver reveals avoid a scroll-event render loop; reduced motion stays static.
@@ -43,6 +49,10 @@ export default function App() {
         setSelected((i) => ((i ?? 0) + 1) % looks.length);
       if (e.key === "ArrowLeft")
         setSelected((i) => ((i ?? 0) + looks.length - 1) % looks.length);
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        setSelectedSize("M");
+        setAddedLookId(null);
+      }
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
@@ -104,7 +114,13 @@ export default function App() {
         </nav>
       )}
       <main id="main">
-        <CollectionHero onOpen={setSelected} />
+        <CollectionHero
+          onOpen={(index) => {
+            setSelectedSize("M");
+            setAddedLookId(null);
+            setSelected(index);
+          }}
+        />
         <a className="announcement" href="#collection">
           <span className="mono">
             THE DEBUT COLLECTION
@@ -115,8 +131,11 @@ export default function App() {
           </span>
         </a>
         <CollectionSection
-          onOpen={setSelected}
-          onAdd={(id) => dispatch({ type: "add", variantId: id, quantity: 1 })}
+          onOpen={(index) => {
+            setSelectedSize("M");
+            setAddedLookId(null);
+            setSelected(index);
+          }}
         />
         <UpcomingApparelSection />
         <HouseSection />
@@ -158,23 +177,82 @@ export default function App() {
               </span>
               <p>{looks[selected].description}</p>
               <span className="mono">{looks[selected].category}</span>
+              <div className="product-specs">
+                <div>
+                  <span className="mono">MATERIAL</span>
+                  <span>100% cotton</span>
+                </div>
+                <div>
+                  <span className="mono">ORIGIN</span>
+                  <span>Made in India</span>
+                </div>
+              </div>
+              <div className="size-picker">
+                <span className="mono" id="size-label">
+                  SELECT SIZE
+                </span>
+                <div role="group" aria-labelledby="size-label">
+                  {productSizes.map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      aria-pressed={selectedSize === size}
+                      onClick={() => {
+                        setSelectedSize(size);
+                        setAddedLookId(null);
+                      }}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <button
                 className="look-add-to-cart"
                 onClick={() => {
+                  const variantId = createProductVariantId(
+                    looks[selected].id,
+                    selectedSize,
+                  );
                   dispatch({
                     type: "add",
-                    variantId: looks[selected].id,
+                    variantId,
                     quantity: 1,
                   });
-                  setAddedLookId(looks[selected].id);
+                  setAddedLookId(variantId);
                 }}
               >
-                {addedLookId === looks[selected].id
+                {addedLookId ===
+                createProductVariantId(looks[selected].id, selectedSize)
                   ? "Added to bag"
                   : "Add to bag"}
-                <span>{addedLookId === looks[selected].id ? "✓" : "+"}</span>
+                <span>
+                  {addedLookId ===
+                  createProductVariantId(looks[selected].id, selectedSize)
+                    ? "✓"
+                    : "+"}
+                </span>
               </button>
-              {addedLookId === looks[selected].id && (
+              <button
+                className="look-buy-now"
+                onClick={() => {
+                  dispatch({
+                    type: "add",
+                    variantId: createProductVariantId(
+                      looks[selected].id,
+                      selectedSize,
+                    ),
+                    quantity: 1,
+                  });
+                  setSelected(null);
+                  setCartOpen(true);
+                  setAddedLookId(null);
+                }}
+              >
+                Buy it now <span>↗</span>
+              </button>
+              {addedLookId ===
+                createProductVariantId(looks[selected].id, selectedSize) && (
                 <button
                   className="view-bag-link"
                   onClick={() => {
@@ -188,9 +266,11 @@ export default function App() {
               )}
               <div className="detail-nav">
                 <button
-                  onClick={() =>
-                    setSelected((selected + looks.length - 1) % looks.length)
-                  }
+                  onClick={() => {
+                    setSelectedSize("M");
+                    setAddedLookId(null);
+                    setSelected((selected + looks.length - 1) % looks.length);
+                  }}
                 >
                   ← Previous
                 </button>
@@ -198,7 +278,11 @@ export default function App() {
                   {selected + 1} / {looks.length}
                 </span>
                 <button
-                  onClick={() => setSelected((selected + 1) % looks.length)}
+                  onClick={() => {
+                    setSelectedSize("M");
+                    setAddedLookId(null);
+                    setSelected((selected + 1) % looks.length);
+                  }}
                 >
                   Next →
                 </button>

@@ -1,6 +1,7 @@
 import { useCart } from "../commerce/CommerceProvider";
 import { formatPrice, getCatalogItem } from "../data/catalog";
 import { looks } from "../data/looks";
+import { parseProductVariantId } from "../commerce/productVariant";
 import { LookImage } from "./LookCard";
 import { Modal } from "./Modal";
 
@@ -31,7 +32,8 @@ export function CartDrawer({ onClose }: { onClose: () => void }) {
           <>
             <div className="cart-lines">
               {lines.map((line) => {
-                const look = looks.find((item) => item.id === line.variantId);
+                const { lookId, size } = parseProductVariantId(line.variantId);
+                const look = looks.find((item) => item.id === lookId);
                 if (!look) throw new Error(`Unknown cart item: ${line.variantId}`);
                 const item = getCatalogItem(look.id);
                 return (
@@ -42,6 +44,7 @@ export function CartDrawer({ onClose }: { onClose: () => void }) {
                     <div className="cart-line-copy">
                       <span className="mono">{look.category}</span>
                       <h3>{look.title}</h3>
+                      <span className="cart-line-size">Size: {size}</span>
                       <span>{formatPrice(item.amount)} USD</span>
                       <div className="cart-line-controls">
                         <div

@@ -1,6 +1,10 @@
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { cartReducer } from "./cart.ts";
+import {
+  createProductVariantId,
+  parseProductVariantId,
+} from "./productVariant.ts";
 test("merges matching variants while preserving other variants", () => {
   const initial = [
     { variantId: "a", quantity: 2 },
@@ -55,4 +59,22 @@ test("sets a cart quantity or removes the item at zero", () => {
     }),
     [],
   );
+});
+
+test("keeps garment sizes as separate cart variants", () => {
+  const smallId = createProductVariantId("01", "S");
+  const largeId = createProductVariantId("01", "L");
+  const cart = cartReducer(
+    [{ variantId: smallId, quantity: 1 }],
+    { type: "add", variantId: largeId, quantity: 1 },
+  );
+  assert.deepEqual(cart, [
+    { variantId: smallId, quantity: 1 },
+    { variantId: largeId, quantity: 1 },
+  ]);
+  assert.deepEqual(parseProductVariantId(largeId), {
+    lookId: "01",
+    size: "L",
+  });
+  assert.throws(() => parseProductVariantId("01:XL"), /Invalid product variant/);
 });

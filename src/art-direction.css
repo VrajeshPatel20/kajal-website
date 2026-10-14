@@ -721,8 +721,68 @@ dialog {
   font-size: 17px;
   font-weight: 600;
 }
+.product-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.product-specs > div {
+  display: grid;
+  gap: 6px;
+}
+.product-specs .mono,
+.size-picker > .mono {
+  color: #59677d;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.product-specs > div > span:last-child {
+  font-size: 12px;
+}
+.size-picker {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.size-picker > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.size-picker button {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 12px;
+}
+.size-picker button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--paper);
+}
 .look-modal .look-detail-copy > .look-add-to-cart {
-  margin-top: 25px;
+  margin-top: 18px;
+}
+.look-modal .look-detail-copy > .look-buy-now {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 9px;
+  padding: 0 18px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.look-modal .look-detail-copy > .look-buy-now:hover {
+  background: #e8edf4;
 }
 .view-bag-link {
   margin-top: 13px;
@@ -812,6 +872,11 @@ dialog {
 .cart-line-copy > span:not(.mono) {
   font-size: 12px;
   color: #606759;
+}
+.cart-line-copy > .cart-line-size {
+  display: block;
+  margin: 0 0 5px;
+  color: var(--ink);
 }
 .cart-line > strong {
   padding-top: 3px;

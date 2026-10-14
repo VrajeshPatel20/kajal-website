@@ -37,12 +37,10 @@ export function LookCard({
   look,
   total,
   onOpen,
-  onAdd,
 }: {
   look: Look;
   total: number;
   onOpen: (look: Look) => void;
-  onAdd: (id: string) => void;
 }) {
   return (
     <article className="look-card">
@@ -67,8 +65,8 @@ export function LookCard({
         </span>
       </div>
       <p className="look-story">{look.description}</p>
-      <button className="card-add-to-cart" onClick={() => onAdd(look.id)}>
-        Add to bag <span>+</span>
+      <button className="card-add-to-cart" onClick={() => onOpen(look)}>
+        Choose size <span>→</span>
       </button>
     </article>
   );
